@@ -1,0 +1,16 @@
+{
+  "name": "lookupbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "nyasosky",
+  "license": "ISC",
+  "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.4.0",
+    "local-reverse-geocoder": "^0.16.7",
+    "shapefile": "^0.6.6"
+  }
+}
