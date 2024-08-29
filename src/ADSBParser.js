@@ -5,7 +5,7 @@ const LONGITUDE_INDEX = 5
 
 async function parseFlights() {
     console.log("Starting to parse new flight data")
-    const data = require("./test_data.json")
+    const data = require("../data/test_data.json")
     const flights = data["states"]
     const unitedStatesGeos = await loadShapefileData()
     var flightsInUnitedStates = []
@@ -21,7 +21,7 @@ async function parseFlights() {
 async function loadShapefileData() {
     var shapefile = require("shapefile");
     try {
-        const file = await shapefile.open("../shapefiles/nation/cb_2018_us_nation_5m.shp")
+        const file = await shapefile.open("./shapefiles/nation/cb_2018_us_nation_5m.shp")
         const data = await file.read()
         console.log("Shapefile loaded successfully")
         return data.value
