@@ -18,13 +18,24 @@ async function parseFlights() {
 }
 
 
-async function loadShapefileData() {
+async function loadShapefileData(state) {
     var shapefile = require("shapefile");
+    const filename = state ? "./shapefiles/states/cb_2018_us_state_500k.shp" : "./shapefiles/nation/cb_2018_us_nation_5m.shp"
     try {
-        const file = await shapefile.open("./shapefiles/nation/cb_2018_us_nation_5m.shp")
-        const data = await file.read()
+        const file = await shapefile.open(filename)
+        let keepReading = true
+        let dataMap = new Map()
+        while(keepReading) {
+            data = await file.read()
+            if (data.value) {
+                dataMap.set(data.value["properties"]["NAME"], data.value)
+            }
+            else {
+                keepReading = false
+            }
+        }
         console.log("Shapefile loaded successfully")
-        return data.value
+        return state ? dataMap.get(state) : dataMap.get("United States")
     }
     catch (error) {
         console.error(error.stack)
@@ -61,4 +72,4 @@ function isFlightInBoundaries(lat, lng, geos) {
     return false
 }
 
-parseFlights()
+loadShapefileData("Minnesota")
